@@ -1,5 +1,5 @@
 from django import forms
-from django.forms import TextInput, EmailInput
+from django.forms import TextInput, EmailInput, CheckboxInput
 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
@@ -17,9 +17,15 @@ class createUserForm(UserCreationForm):
         widget=forms.PasswordInput(attrs={'class': 'form-control'})
     )
 
+    is_teacher = forms.BooleanField(
+        required=False,
+        label='Are you a teacher ? ',
+        widget=forms.CheckboxInput(attrs={'class': 'form-check-input'})
+    )
+
     class Meta(UserCreationForm.Meta):
         model = get_user_model()
-        fields = ['username', 'email', 'first_name', 'last_name']
+        fields = ['username', 'email', 'first_name', 'last_name', 'is_teacher']
 
         # add widgets for fields from user_model
         widgets = {
