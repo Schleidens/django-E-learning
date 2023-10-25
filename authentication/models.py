@@ -7,6 +7,7 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 class User(AbstractUser):
     email = models.EmailField(unique=True)
     username = models.CharField(max_length=15, unique=True)
+    is_teacher = models.BooleanField(default=False, verbose_name="Teacher")
 
     USERNAME_FIELD = 'username'
 
