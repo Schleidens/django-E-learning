@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic import View
 from django.contrib.auth import login, authenticate
+from django.db import transaction
 
 from django.contrib.auth.views import LogoutView
 from django.urls import reverse_lazy
@@ -8,11 +9,14 @@ from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 
 from .forms import createUserForm, signInUserForm
+from userProfile.models import studentProfile, teacherProfile
 
 
 class signUpView(View):
     template = 'signup.html'
     class_form = createUserForm
+    student_profile_model = studentProfile
+    teacher_profile_model = teacherProfile
 
     def get(self, request):
         if request.user.is_authenticated:
@@ -22,21 +26,30 @@ class signUpView(View):
 
         return render(request, self.template, {"form": form})
 
+    @transaction.atomic
     def post(self, request):
         form = self.class_form(request.POST)
 
         if form.is_valid():
-            user = form.save()
+            user = form.save(commit=False)
 
             if user.is_teacher:
                 user.is_active = False
-                user.save()
-                return redirect("new-teacher-page")
             else:
                 user.is_active = True
-                user.save()
-                login(request, user)
-                return redirect("home-page")
+
+            user.save()
+            login(request, user)
+
+            if user.is_teacher:
+                profile_model = self.teacher_profile_model
+                redirect_url = "new-teacher-page"
+            else:
+                profile_model = self.student_profile_model
+                redirect_url = "home-page"
+
+            profile, created = profile_model.objects.get_or_create(user=user)
+            return redirect(redirect_url)
 
         return render(request, self.template, {"form": form})
 

@@ -21,3 +21,13 @@ class teacherProfile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+class studentProfile(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, verbose_name=(
+        "Student"), related_name="student", on_delete=models.CASCADE)
+    profile_picture = models.ImageField(
+        upload_to="profile/", blank=True)
+
+    def __str__(self):
+        return self.user.username
