@@ -133,6 +133,15 @@ STATIC_URL = 'static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR.joinpath('media/')
 
+# redirect for logout
+LOGOUT_REDIRECT_URL = 'home-page'
+
+# redirect page for guest users
+LOGIN_URL = 'login'
+
+# set redirect page for authenticated user
+LOGIN_REDIRECT_URL = 'home-page'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
