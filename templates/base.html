@@ -44,41 +44,102 @@
                   class="nav-link active"
                   aria-current="page"
                   href="#"
-                  >Home</a
-                >
-              </li>
-              <li class="nav-item">
-                <a
-                  class="nav-link"
-                  href="#"
-                  >Link</a
-                >
-              </li>
-              <li class="nav-item">
-                <a
-                  class="nav-link disabled"
-                  aria-disabled="true"
-                  >Disabled</a
+                  >Courses</a
                 >
               </li>
             </ul>
-            <form
-              class="d-flex"
-              role="search"
-            >
-              <input
-                class="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button
-                class="btn btn-outline-success"
-                type="submit"
+
+            <div class="d-flex">
+              <form
+                class="me-2"
+                role="search"
               >
-                Search
-              </button>
-            </form>
+                <input
+                  class="form-control bg-dark text-light"
+                  style="border-color: rgb(75, 75, 75) !important"
+                  type="search"
+                  placeholder="Search"
+                  aria-label="Search"
+                />
+              </form>
+
+              {% if request.user.is_authenticated %}
+              <div
+                class="btn-group pe-2 border border-1 rounded-pill"
+                style="border-color: rgb(75, 75, 75) !important"
+              >
+                <button
+                  href="#"
+                  class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  style="
+                    color: white;
+                    background: none;
+                    border: none;
+                    outline: none;
+                    padding: 0;
+                  "
+                >
+                  {% if request.user.profile_photo %}
+                  <img
+                    src="{{ request.user.profile_photo.url }}"
+                    class="rounded-circle"
+                    width="40"
+                    height="40"
+                    alt="{{ request.user.username}}'s profile photo"
+                  />
+                  {% else %}
+                  <img
+                    src="https://vectorified.com/images/no-profile-picture-icon-24.jpg"
+                    class="rounded-circle"
+                    width="40"
+                    height="40"
+                    alt="no profile photo"
+                  />
+                  {% endif %}
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li>
+                    <span class="px-2 fw-bold"
+                      >{{request.user.get_full_name}}</span
+                    >
+                  </li>
+                  <li><hr class="dropdown-divider" /></li>
+                  <li>
+                    <a
+                      class="dropdown-item"
+                      href="#"
+                      >My Dashboard</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="dropdown-item"
+                      href="#"
+                      >Profile</a
+                    >
+                  </li>
+                  <li><hr class="dropdown-divider" /></li>
+                  <li>
+                    <a
+                      class="dropdown-item"
+                      href="{% url 'logout' %}"
+                      >Sign out</a
+                    >
+                  </li>
+                </ul>
+              </div>
+              {% else %}
+              <a
+                type="button"
+                class="btn btn-success"
+                href="{% url 'signin-page' %}"
+              >
+                Sign In
+              </a>
+              {% endif %}
+            </div>
           </div>
         </div>
       </nav>
