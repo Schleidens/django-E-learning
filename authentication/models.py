@@ -7,12 +7,17 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 class User(AbstractUser):
     email = models.EmailField(unique=True)
     username = models.CharField(max_length=15, unique=True)
+    profile_picture = models.ImageField(
+        upload_to="profile/", blank=True)
     is_teacher = models.BooleanField(default=False, verbose_name="Teacher")
 
     USERNAME_FIELD = 'username'
 
     def __str__(self):
         return self.username
+
+    def get_full_name(self):
+        return f"{self.first_name} {self.last_name}"
 
 
 class CustomUserManager(BaseUserManager):

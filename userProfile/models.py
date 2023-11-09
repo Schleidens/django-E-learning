@@ -16,8 +16,7 @@ class teacherProfile(models.Model):
         "Teacher"), related_name="teacher", on_delete=models.CASCADE)
     bio = models.TextField(max_length=1000, validators=[validate_bio_length])
     qualifications = models.CharField(max_length=50)
-    profile_picture = models.ImageField(
-        upload_to="profile/", blank=True)
+    title = models.CharField(max_length=30)
 
     def __str__(self):
         return self.user.username
@@ -26,8 +25,7 @@ class teacherProfile(models.Model):
 class studentProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, verbose_name=(
         "Student"), related_name="student", on_delete=models.CASCADE)
-    profile_picture = models.ImageField(
-        upload_to="profile/", blank=True)
+    date_of_birth = models.DateField(null=True, blank=True)
 
     def __str__(self):
         return self.user.username
