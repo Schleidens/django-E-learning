@@ -7,5 +7,41 @@
 
 
 {% block content %}
-I'm a Student
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white text-center">
+                </div>
+                <div class="card-body text-center">
+                    {% if profile.user.profile_pic %}
+                        <img src="{profile.user.profile_pic.url}" 
+                        alt="{{profile.user.username}} profile picture"
+                        class="img-fluid rounded-circle mb-4" 
+                        style="max-width: 150px;"
+                        >
+                    {% else %}
+                        <img
+                        src="https://vectorified.com/images/no-profile-picture-icon-24.jpg"
+                        class="rounded-circle"
+                        style="max-width: 150px;"
+                        alt="{{profile.user.username}} default profile photo"
+                        />
+                    {% endif %}
+                    <h2 class="mb-2 mt-2">{{profile.user.get_full_name}}</h2>
+                    <p class="mb-2">
+                        <i class="fa fa-envelope" aria-hidden="true"></i>
+                        {{profile.user.email}}
+                    </p>
+                    <p class="mb-2">@{{profile.user.username}}</p>
+                    <a href="#" class="btn btn-primary mt-3">Edit Profile</a>
+                </div>
+            </div>
+            <div class="w-f00 d-flex flex-column mt-5">
+                <a href="#" class="btn btn-danger btn-block w-100">Delete Profile</a>
+                <a href="#" class="btn btn-warning btn-block mt-3 w-100">Change Password</a>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock content %}
