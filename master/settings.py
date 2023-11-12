@@ -137,7 +137,7 @@ MEDIA_ROOT = BASE_DIR.joinpath('media/')
 LOGOUT_REDIRECT_URL = 'home-page'
 
 # redirect page for guest users
-LOGIN_URL = 'login'
+LOGIN_URL = 'signin-page'
 
 # set redirect page for authenticated user
 LOGIN_REDIRECT_URL = 'home-page'
