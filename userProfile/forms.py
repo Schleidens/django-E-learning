@@ -3,6 +3,8 @@ from django.forms import TextInput, Textarea, ClearableFileInput
 
 from django.contrib.auth import get_user_model
 
+from .models import teacherProfile
+
 
 class editUserAccountInformationForm(forms.ModelForm):
     class Meta:
@@ -27,4 +29,26 @@ class editUserAccountInformationForm(forms.ModelForm):
                 'multiple': False,
                 'class': 'form-control'
             })
+        }
+
+
+class editTeacherProfileForm(forms.ModelForm):
+
+    class Meta:
+        model = teacherProfile
+        fields = ['bio', 'qualifications', 'title']
+
+        # specify widget for each input
+        widgets = {
+            'bio': Textarea(attrs={
+                'class': 'form-control'
+            }),
+
+            'qualifications': TextInput(attrs={
+                'class': 'form-control'
+            }),
+
+            'title': TextInput(attrs={
+                'class': 'form-control'
+            }),
         }

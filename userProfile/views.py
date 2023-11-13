@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import View
 
 from .models import studentProfile, teacherProfile
-from .forms import editUserAccountInformationForm
+from .forms import editUserAccountInformationForm, editTeacherProfileForm
 
 # Create your views here.
 
@@ -46,6 +46,31 @@ class editUserAccountInformationView(LoginRequiredMixin, View):
     def post(self, request):
         form = self.form_class(
             request.POST, request.FILES, instance=request.user)
+
+        if form.is_valid():
+            form.save()
+
+            return redirect('user-profile-page')
+
+        return render(request, self.template_class, {'form': form})
+
+
+class editTeacherProfileView(LoginRequiredMixin, View):
+    profile_model = teacherProfile
+    form_class = editTeacherProfileForm
+    template_class = 'edit_teacher_profile_template.html'
+
+    def get(self, request):
+        thisTeacherProfile = get_object_or_404(
+            teacherProfile, user=request.user)
+        form = self.form_class(instance=thisTeacherProfile)
+
+        return render(request, self.template_class, {'form': form})
+
+    def post(self, request):
+        thisTeacherProfile = get_object_or_404(
+            teacherProfile, user=request.user)
+        form = self.form_class(request.POST, instance=thisTeacherProfile)
 
         if form.is_valid():
             form.save()
