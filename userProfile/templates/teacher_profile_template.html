@@ -11,11 +11,11 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header bg-primary text-white text-center">
+                <div class="card-header bg-secondary">
                 </div>
                 <div class="card-body text-center">
-                    {% if profile.user.profile_pic %}
-                        <img src="{profile.user.profile_pic.url}" 
+                    {% if profile.user.profile_picture %}
+                        <img src="{{profile.user.profile_picture.url}}"
                         alt="{{profile.user.username}} profile picture"
                         class="img-fluid rounded-circle mb-4" 
                         style="max-width: 150px;"
@@ -28,21 +28,32 @@
                         alt="{{profile.user.username}} default profile photo"
                         />
                     {% endif %}
-                    <h2 class="mb-2 mt-2">{{profile.user.get_full_name}}</h2>
+                    <h2 class="mb-1 mt-2">{{profile.user.get_full_name}}</h2>
+                    <p class="mb-2 text-secondary">@{{profile.user.username}}</p>
                     <h5 class="mb-4">{{profile.title}}</h5>
                     <p class="mb-2">
                         <i class="fa fa-envelope" aria-hidden="true"></i>
                         {{profile.user.email}}
                     </p>
-                    <p class="mb-2">@{{profile.user.username}}</p>
                     <p class="mb-4">{{profile.bio}}</p>
-                    <p class="mb-2">{{profile.qualifications}}</p>
+                    <p class="mb-2">
+                        <i class="fa fa-certificate" aria-hidden="true"></i>
+                        {{profile.qualifications}}
+                    </p>
                     <a href="#" class="btn btn-primary mt-3">Edit Profile</a>
                 </div>
             </div>
-            <div class="w-f00 d-flex flex-column mt-5">
-                <a href="#" class="btn btn-danger btn-block w-100">Delete Profile</a>
-                <a href="#" class="btn btn-warning btn-block mt-3 w-100">Change Password</a>
+            <div class="w-f00 d-flex flex-column mt-3">
+                <a href="{% url 'edit-account-info-page' %}" class="btn btn-primary btn-block mb-5 w-100" title="username, firstName....">Edit account information</a>
+                
+                <div class="text-center">
+                        <p class="text-danger">
+                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                            Danger zone
+                        </p>
+                </div>
+                <a href="#" class="btn btn-warning btn-block mb-1 w-100">Change Password</a>
+                <a href="#" class="btn btn-danger btn-block mt-1 w-100">Delete account</a>
             </div>
         </div>
     </div>
