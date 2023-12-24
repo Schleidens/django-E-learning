@@ -4,6 +4,8 @@ from django.forms import TextInput, EmailInput, CheckboxInput
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
 
+from django.contrib.auth.forms import PasswordChangeForm
+
 
 class createUserForm(UserCreationForm):
     # specify password for having access to his widget
@@ -61,3 +63,14 @@ class signInUserForm(forms.Form):
         widget=forms.PasswordInput(attrs={'class': 'form-control'}),
         label='Password'
     )
+
+
+class changePasswordForm(PasswordChangeForm):
+    def __init__(self, *args, **kwargs):
+        super(changePasswordForm, self).__init__(*args, **kwargs)
+        self.fields['old_password'].widget = forms.PasswordInput(
+            attrs={'class': 'form-control', 'placeholder': 'Enter your old password'})
+        self.fields['new_password1'].widget = forms.PasswordInput(
+            attrs={'class': 'form-control', 'placeholder': 'Enter your new password'})
+        self.fields['new_password2'].widget = forms.PasswordInput(
+            attrs={'class': 'form-control', 'placeholder': 'Confirm your new password'})
