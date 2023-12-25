@@ -6,10 +6,11 @@ from django.db import transaction
 from django.contrib.auth.views import LogoutView
 from django.urls import reverse_lazy
 
-from django.contrib.auth.decorators import login_required
-
-from .forms import createUserForm, signInUserForm
+from .forms import createUserForm, signInUserForm, changePasswordForm
 from userProfile.models import studentProfile, teacherProfile
+
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import update_session_auth_hash
 
 
 class signUpView(View):
@@ -95,13 +96,34 @@ class signInView(View):
         return render(request, self.template, context=context)
 
 
+# change password view CBVs
+class changePasswordView(LoginRequiredMixin, View):
+    password_form = changePasswordForm
+    template = 'change_password.html'
+
+    def get(self, request):
+        form = self.password_form(request.user)
+
+        return render(request, self.template, {'form': form})
+
+    def post(self, request):
+        form = self.password_form(user=request.user, data=request.POST)
+
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+
+            return redirect('user-profile-page')
+
+        return render(request, self.template, {'form': form})
+
+
 # logout view CBVs
 class user_logout_view(LogoutView):
     next_page = reverse_lazy('home-page')
 
 
 # page for suspended users
-# @login_required
 def newTeacherMessageView(request):
     if request.user.is_authenticated:
         return redirect("home-page")
