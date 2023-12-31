@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import View
 
 from .models import studentProfile, teacherProfile
-from .forms import editUserAccountInformationForm, editTeacherProfileForm
+from .forms import editUserAccountInformationForm, editTeacherProfileForm, deleteAccountForm
 
 # Create your views here.
 
@@ -78,3 +78,20 @@ class editTeacherProfileView(LoginRequiredMixin, View):
             return redirect('user-profile-page')
 
         return render(request, self.template_class, {'form': form})
+
+
+# user delete profile view CBVs
+class deleteAccountView(LoginRequiredMixin, View):
+    delete_form = deleteAccountForm
+    template = 'delete_account.html'
+
+    def get(self, request):
+        form = self.delete_form()
+
+        return render(request, self.template, {'form': form})
+
+    def post(self, request):
+        user = request.user
+        user.delete()
+
+        return redirect('signup-page')
