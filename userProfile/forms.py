@@ -52,3 +52,7 @@ class editTeacherProfileForm(forms.ModelForm):
                 'class': 'form-control'
             }),
         }
+
+
+class deleteAccountForm(forms.Form):
+    delete_profile = forms.BooleanField(widget=forms.HiddenInput, initial=True)
