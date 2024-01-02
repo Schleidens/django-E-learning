@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # project apps
     'authentication',
     'userProfile',
+    'courses',
 
     # third party apps
     'bootstrap5'
