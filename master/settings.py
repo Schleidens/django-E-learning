@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'courses',
 
     # third party apps
-    'bootstrap5'
+    'bootstrap5',
+    'ckeditor',
 ]
 
 MIDDLEWARE = [
@@ -111,6 +112,21 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+# ckeditor config
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': ['Custom', {'name': 'codesnippet', 'items': ['CodeSnippet']},],
+        'toolbar_Custom': [
+            ['Bold', 'Italic', 'Underline'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            ['Link', 'Unlink'],
+            ['RemoveFormat', 'Source']
+        ]
+    }
+}
 
 
 # Internationalization
