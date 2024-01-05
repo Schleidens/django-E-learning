@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from django.views.generic import View
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -17,4 +17,14 @@ class coursesView(LoginRequiredMixin, View):
         return render(request, self.template, {'form': self.form_class})
 
     def post(self, request):
-        pass
+        form = self.form_class(request.POST, request.FILES)
+
+        if form.is_valid():
+            course = form.save(commit=False)
+
+            course.author = request.user
+            course.save()
+
+            return redirect('home-page')
+
+        return render(request, self.template, {'form': self.form_class})
