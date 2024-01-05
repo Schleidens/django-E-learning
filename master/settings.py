@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -41,9 +42,11 @@ INSTALLED_APPS = [
     # project apps
     'authentication',
     'userProfile',
+    'courses',
 
     # third party apps
-    'bootstrap5'
+    'bootstrap5',
+    'ckeditor',
 ]
 
 MIDDLEWARE = [
@@ -111,6 +114,27 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# ckeditor config
+
+KEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': [
+            ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript'],
+            ['NumberedList', 'BulletedList', 'Blockquote'],
+            ['Link', 'Unlink', 'Anchor'],
+            ['RemoveFormat', 'Source'],
+            ['CodeSnippet'],
+            '/',
+            ['Styles', 'Format', 'Font', 'FontSize'],
+            ['TextColor', 'BGColor'],
+            ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+        ],
+        'height': 300,
+        'width': '100%',
+        'allowedContent': True,
+    },
+}
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
@@ -128,6 +152,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# Specify the absolute path where static files will be collected
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 
 # root for media
 MEDIA_URL = '/media/'
