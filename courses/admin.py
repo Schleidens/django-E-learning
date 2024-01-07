@@ -4,4 +4,10 @@ from .models import coursesModel
 
 # Register your models here.
 
-admin.site.register(coursesModel)
+
+class courseAdmin(admin.ModelAdmin):
+    list_display = ['slug']
+    readonly_fields = ['slug']  # Make slug read-only in detail view
+
+
+admin.site.register(coursesModel, courseAdmin)
