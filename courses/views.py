@@ -4,11 +4,12 @@ from django.views.generic import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .forms import coursesForm
+from .models import coursesModel
 
 # Create your views here.
 
 
-class coursesView(LoginRequiredMixin, View):
+class createNewCoursesView(LoginRequiredMixin, View):
     form_class = coursesForm
     template = 'courses_intro_template.html'
 
@@ -28,3 +29,16 @@ class coursesView(LoginRequiredMixin, View):
             return redirect('home-page')
 
         return render(request, self.template, {'form': self.form_class})
+
+
+class allCoursesListView(View):
+    model_class = coursesModel
+    template = 'all_courses_list_template.html'
+
+    def get(self, request):
+        courses = self.model_class.objects.all()
+
+        return render(request, self.template, {'courses': courses})
+
+    def post(self, request):
+        pass
