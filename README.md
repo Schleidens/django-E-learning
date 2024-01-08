@@ -8,3 +8,5 @@ pip install -r requirements.txt
 python manage.py migrate
 python manage.py runserver
 ```
+
+[My Twitter](https://x.com/schleidens_dev)
